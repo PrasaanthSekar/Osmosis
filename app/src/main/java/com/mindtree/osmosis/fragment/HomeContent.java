@@ -40,7 +40,8 @@ public class HomeContent extends Fragment {
     private RelativeLayout vendorContainer;
     private TextView vendor1, vendor2, vendor1Email, vendor2Email;
     private int MY_SOCKET_TIMEOUT_MS = 5000;
-    private CardView cardView;
+    private CardView cardView, vendor2Card;
+    private double latitude, longitude, latitude1, longitude1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,12 +56,26 @@ public class HomeContent extends Fragment {
         vendor2Email = (TextView) view.findViewById(R.id.vendor2_email);
         vendorContainer = (RelativeLayout) view.findViewById(R.id.vendor_container);
         cardView = (CardView) view.findViewById(R.id.vendor1);
+        vendor2Card = (CardView) view.findViewById(R.id.vendor2);
         getVendors();
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), VendorMaps.class));
+                Intent intent = new Intent(getContext(), VendorMaps.class);
+                intent.putExtra("lat", latitude);
+                intent.putExtra("long", longitude);
+                startActivity(intent);
+            }
+        });
+
+        vendor2Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VendorMaps.class);
+                intent.putExtra("lat", latitude1);
+                intent.putExtra("long", longitude1);
+                startActivity(intent);
             }
         });
         return view;
@@ -112,6 +127,13 @@ public class HomeContent extends Fragment {
             JSONObject object = response.getJSONObject(i);
             String name = object.getString("name");
             String email = object.getString("emailAddress");
+            if (i == 0) {
+                latitude = object.getJSONObject("locationVO").getDouble("latitude");
+                longitude = object.getJSONObject("locationVO").getDouble("longitude");
+            } else {
+                latitude1 = object.getJSONObject("locationVO").getDouble("latitude");
+                longitude1 = object.getJSONObject("locationVO").getDouble("longitude");
+            }
             populateUI(name, email, i);
         }
     }
