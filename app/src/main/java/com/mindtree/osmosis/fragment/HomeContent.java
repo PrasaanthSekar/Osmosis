@@ -1,7 +1,9 @@
 package com.mindtree.osmosis.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,9 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.mindtree.osmosis.Home;
 import com.mindtree.osmosis.R;
+import com.mindtree.osmosis.VendorMaps;
 import com.mindtree.osmosis.util.FOCVolleyQueue;
 
 import org.json.JSONArray;
@@ -36,6 +40,7 @@ public class HomeContent extends Fragment {
     private RelativeLayout vendorContainer;
     private TextView vendor1, vendor2, vendor1Email, vendor2Email;
     private int MY_SOCKET_TIMEOUT_MS = 5000;
+    private CardView cardView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +54,15 @@ public class HomeContent extends Fragment {
         vendor1Email = (TextView) view.findViewById(R.id.vendor1_email);
         vendor2Email = (TextView) view.findViewById(R.id.vendor2_email);
         vendorContainer = (RelativeLayout) view.findViewById(R.id.vendor_container);
+        cardView = (CardView) view.findViewById(R.id.vendor1);
         getVendors();
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), VendorMaps.class));
+            }
+        });
         return view;
     }
 

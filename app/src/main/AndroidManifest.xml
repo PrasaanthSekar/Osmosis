@@ -28,12 +28,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Booking" />
         <activity android:name=".About" />
+        <activity android:name=".VendorMaps" />
+
+        <service
+            android:name=".service.CheckWaterLevel"
+            android:enabled="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAV-z4zCTmiV8RtOeQkzJdOnHJU_h_Qngk " />
-
-        <activity android:name=".Maps"></activity>
     </application>
 
 </manifest>
